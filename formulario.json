@@ -1,0 +1,158 @@
+{
+  "formulario": {
+  	
+    "assunto": "Solicitação de Card Social - {$NomeEmpresa}",
+    "titulo": "Cadastre-se",
+    "descricao": "Faça parte da nossa rede de clientes",
+    "emailDestino": "wendel.tavares.ti@gmail.com",
+    "siteRedirecionamento": "http://wendel.wd01.com.br/",
+    "respostaDeEnvio": "Email enviado com sucesso, entraremos em contato em breve!",
+    "labelBotao": "Enviar Solicitação ",
+    "reCaptcha": "6LeleXAUAAAAAEY2LBlgiVzrqR373s-OaG3Fo59H",
+    "reCaptchaSecret": "6LeleXAUAAAAAH-cLoWuHuRSqlfaa4Sn8JHEQn9N",
+    "usarHtmlNoEmail": false,
+    
+    "campo": [
+      {
+		"id": "DadosCliente",
+		"label": "Dados do Cliente",
+		"tipo": "IniciaSessao"	
+	  },
+		      {
+		        "id": "Nome",
+		        "label": "Seu Nome:",
+		        "tipo": "Text",
+		        "obrigatorio": true,
+		        "EsteEhONome": true
+		      },
+		      {
+		        "id": "NomeEmpresa",
+		        "label": "Nome da Empresa:",
+		        "tipo": "Text",
+		        "obrigatorio": true
+		      },
+		      {
+		        "id": "Email",
+		        "label": "Email de Cadastro",
+		        "tipo": "Email",
+		        "responderParaEsteEmail": true,
+		        "obrigatorio": true
+		      },
+		      {
+		        "id": "Telefone",
+		        "label": "Telefone:",
+		        "tipo": "Text",
+		        "obrigatorio": true
+		      },
+		      {
+		        "id": "WhatsApp",
+		        "label": "WhatsApp:",
+		        "tipo": "Text",
+		        "obrigatorio": true
+		      },      
+      {
+		"id": "DadosClienteEnd",
+		"tipo": "EncerraSessao"	
+	  },
+	  
+      
+      {
+		"id": "Card01",
+		"label": "Card 01",
+		"tipo": "IniciaSessao"	
+	  },
+		      {
+		        "id": "Assunto1",
+		        "label": "Assunto:",
+		        "tipo": "Text",
+		        "limite": 50
+		      },
+		      
+		      {
+		        "id": "Descricao1",
+		        "label": "Descrição:",
+		        "tipo": "BigText",
+		        "limite": 150
+		      },
+		      
+		      {
+		        "id": "IMG_CARD01_",
+		        "label": "Upload de Imagem:",
+		        "extensoes": ".gif,.jpg,.jpeg,.png,.doc,.docx",
+		        "tipo": "File"
+		      },
+      {
+		"id": "DadosClienteEnd",
+		"tipo": "EncerraSessao"	
+	  },
+      
+
+      {
+		"id": "Card02",
+		"label": "Card 02",
+		"tipo": "IniciaSessao"	
+	  },
+		      {
+		        "id": "Assunto2",
+		        "label": "Assunto:",
+		        "tipo": "Text",
+		        "limite": 50
+		      },
+		      
+		      {
+		        "id": "Descricao2",
+		        "label": "Descrição:",
+		        "tipo": "BigText",
+		        "limite": 150
+		      },
+		      
+		      {
+		        "id": "IMG_CARD02_",
+		        "label": "Upload de Imagem:",
+		        "extensoes": ".gif,.jpg,.jpeg,.png,.doc,.docx",
+		        "tipo": "File"
+		      },
+		      
+      {
+		"id": "DadosClienteEnd",
+		"tipo": "EncerraSessao"	
+	  },
+
+	  
+      {
+		"id": "Card03",
+		"label": "Card 03",
+		"tipo": "IniciaSessao"	
+	  },
+	  
+		      {
+		        "id": "Assunto3",
+		        "label": "Assunto:",
+		        "tipo": "Text",
+		        "limite": 50
+		      },
+		      
+		      {
+		        "id": "Descricao3",
+		        "label": "Descrição:",
+		        "tipo": "BigText",
+		        "limite": 150
+		      },
+		      
+		      {
+		        "id": "IMG_CARD03_",
+		        "label": "Upload de Imagem:",
+		        "extensoes": ".gif,.jpg,.jpeg,.png,.doc,.docx",
+		        "tipo": "File"
+		      },
+
+      {
+		"id": "Card03End",
+		"tipo": "EncerraSessao"	
+	  }
+      
+      
+      
+    ]
+  }
+}

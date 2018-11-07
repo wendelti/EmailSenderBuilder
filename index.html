@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		   <style>
+      @import url("assets/bootstrap.css");
+      .cw_count {
+		  border: 1px solid #b0b1b3;
+		  color: #666666;
+		  margin-left: 5px;
+		  padding: 4px;
+		}
+
+		.cw_count_warning {
+		  border: 1px solid #c10000;
+		  color: #c10000;
+		}
+      </style>
+
+	<script src="assets/jquery.min.js"></script>
+    <script src="assets/underscore.js"></script>
+		
+    <script src="assets/jsonform.js"></script>
+    <script src="assets/charcounter.js"></script>
+		<script>
+		jQuery.loadScript = function (url, callback) {
+		    jQuery.ajax({
+		        url: url,
+		        dataType: 'script',
+		        success: callback,
+		        async: true
+		    });
+		}
+
+		JSONForm.fieldTypes['recaptcha'] = {
+		  template: '<div class="g-recaptcha" data-sitekey="<%=node.value%>"></div><br>'
+		};
+		JSONForm.fieldTypes['IniciaSessao'] = {
+		  template: '<fieldset class="form-group"><legend><%=node.value%></legend>'
+		};
+		JSONForm.fieldTypes['EncerraSessao'] = {
+		  template: '</fieldset>'
+		};
+			
+		$(document).ready(function() {
+		    $.ajax({
+		      url: 'formulario.json',
+		      dataType: 'text'
+		    }).done(function (code) {
+		    	
+		    	var form = {schema: {}, form: [] }
+		    	
+		    	var dados = JSON.parse(code);
+		    	console.log(dados);
+		    	
+		    	$(dados.formulario.campo).each(function(i, obj){
+					/*
+					if(obj.responderParaEsteEmail){
+    					addHiddenData("responderParaEsteEmail", form, obj.id);
+					}
+					
+					if(obj.EsteEhONome){
+    					addHiddenData("EsteEhONome", form, obj.id);
+					}*/
+					
+					if(obj.tipo == "" || obj.tipo == "" ){
+						
+					}
+					
+					form.schema[obj.id] = { 
+						type: "",
+						title: obj.label, 
+						maxLength : obj.limite , 
+						required : obj.obrigatorio 
+					}
+					
+					var itemForm = { key : obj.id };
+					
+					switch(obj.tipo) {
+						
+						case "Text":
+							form.schema[obj.id].type = "string";					   	
+							break;
+							
+						case "File":
+							form.schema[obj.id].type = "file";	
+							form.schema[obj.id].extensions = obj.extensoes;		
+							itemForm.extensions = obj.extensoes;   	
+							break;
+							
+						case "Drop":	
+							addStringData(form, obj);						   	
+							break;
+							
+						case "Check":
+							addArrayData(form, obj);
+						    itemForm.type = "checkboxes"; 						   	
+							break;
+							
+						case "Radio":
+							addStringData(form, obj);
+						    itemForm.type = "radios"; 						   	
+							break;
+							
+							
+						case "BigText":
+							form.schema[obj.id].type = "string";	
+						    itemForm.type = "textarea";						   	
+							break;
+												
+						case "Email":
+							form.schema[obj.id].type = "email";					   	
+							break;
+									
+						case "IniciaSessao":
+							delete form.schema[obj.id];//  = "string";
+							//form.schema[obj.id].type = "strin";
+							delete itemForm.key;	
+							itemForm.type = "IniciaSessao";		
+							itemForm.value = obj.label;						   	
+							break;
+						case "EncerraSessao":
+							delete form.schema[obj.id];//  = "string";
+							delete itemForm.key;	
+							itemForm.type = "EncerraSessao";	
+							itemForm.value = obj.label;					   	
+							break;
+						
+						
+						default:
+							break;
+					}
+						    
+					form.form.push(itemForm);	 				
+		    		
+		    	});
+		    	
+
+    			addCaptcha(form, dados.formulario.reCaptcha);
+    			
+    			addSendButton(form, dados.formulario);
+    			
+    			//addHiddenData("emailDestino", form, dados.formulario.emailDestino);
+    			//addHiddenData("siteRedirecionamento", form, dados.formulario.siteRedirecionamento);
+    			//addHiddenData("respostaDeEnvio", form, dados.formulario.respostaDeEnvio);
+    			
+				console.log(form);
+				
+				$('#result-form').jsonForm(form);	
+ 				
+ 				$('input[maxlength], textarea[maxlength]').charCounter();
+ 
+ 				$.loadScript('https://www.google.com/recaptcha/api.js');
+ 				
+		    }).fail(function () {
+		    	
+		    });
+		    
+			$("form").submit(function(event) {
+
+			   var recaptcha = $("#g-recaptcha-response").val();
+			   if (recaptcha === "") {
+			      event.preventDefault();
+			      alert("Informe o reCaptcha!");
+			   }
+			   
+			});
+
+		});
+		  
+  		
+  		function addCaptcha(form, captcha){
+			form.form.push({
+		      "type": "recaptcha",
+		      "value": captcha
+			});
+  		}
+  		
+  		function addStringData(form, obj){					    
+			form.schema[obj.id].type = "string";		
+			form.schema[obj.id].enum = obj.opcoes;
+  		}
+  		
+  		function addArrayData(form, obj){					    
+			form.schema[obj.id].type = "array";	
+			form.schema[obj.id].items = {
+		        type: "string",
+		        title: "Option",
+		        enum: obj.opcoes
+		    }
+  		}
+  		
+  		function addSendButton(form, obj){
+			form.form.push({
+		      "type": "submit",
+		      "title": obj.labelBotao
+			});
+  		}
+  		
+  		function addHiddenData(field, form, value){
+  			form.schema[field] = { 
+				type: "string",
+				default: value
+			}
+			form.form.push({
+		      "type": "hidden",
+		      "key": field
+			});
+  		}
+  		
+			
+	
+		</script>
+	</head>
+	<body>		
+          <form id="result-form" method="post" action="envia-hospedagem.php" enctype="multipart/form-data"  class="well">
+          	
+          	
+          	
+          	
+          	<br clear="all" />
+          </form>
+	</body>
+</html>
